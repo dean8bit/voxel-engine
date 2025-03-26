@@ -19,6 +19,7 @@ export default class ChunkTests {
       this.GetSetActive1,
       this.GetSetActive2,
       this.GetSetBlockType1,
+      this.GetSetBlockType2,
     ];
   }
 
@@ -61,10 +62,20 @@ export default class ChunkTests {
     c.setVoxel(12, 12, 12, 0);
     c.setBlockType(12, 12, 12, 111);
     var r = c.getBlockType(12, 12, 12);
-    console.log(c.getVoxel(12, 12, 12).toString(2));
     return {
       name: "GetSetBlockType1",
       result: r === 111,
+    };
+  }
+
+  GetSetBlockType2() {
+    var c = new Chunk(16, 16, 16);
+    c.setVoxel(12, 12, 12, 0);
+    c.setBlockType(12, 12, 12, 0b111111111111);
+    var r = c.getBlockType(12, 12, 12);
+    return {
+      name: "GetSetBlockType2",
+      result: r === 0b111111111111,
     };
   }
 
