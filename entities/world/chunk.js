@@ -1,5 +1,3 @@
-import Voxel from "./voxel";
-
 /**
  * Represents a chunk in the voxel game.
  */
@@ -12,7 +10,7 @@ export class Chunk {
 
   /**
    * A flat array representing the 3d voxels.
-   * @type {Array<Voxel>}
+   * @type {Array<number>}
    */
   chunks = [];
 
@@ -26,7 +24,7 @@ export class Chunk {
 
   /**
    * Initialize chunk (and voxels) with the given size.
-   * @param {Voxel} [template]
+   * @param {number} [template]
    */
   initialize(template = null) {
     this._initializeVoxels(template);
@@ -34,69 +32,16 @@ export class Chunk {
 
   /**
    * Creates an instance of a chunk
-   * @param {Voxel} [template]
+   * @param {number} [template]
    */
   _initializeVoxels(template = null) {
     this.chunks = new Array(this.size * this.size * this.size);
     for (let i = 0; i < this.chunks.length; i++) {
-      this.chunks[i] = template ? template.clone() : new Voxel();
+      this.chunks[i] = template || 0;
     }
   }
 
-  /**
-   * Sets the voxel at the given coordinates.
-   * @param {number} x - The x coordinate.
-   * @param {number} y - The y coordinate.
-   * @param {number} z - The z coordinate.
-   * @param {Voxel} voxel - The voxel to set.
-   *
-   * @returns {boolean} True if the voxel was set, false otherwise
-   */
-  setVoxel(x, y, z, voxel) {
-    const index = x + y * this.size + z * this.size * this.size;
-    if (index < 0 || index >= this.chunks.length) {
-      return false;
-    }
-    this.chunks[index] = voxel;
-    return true;
-  }
+  save() {}
 
-  /**
-   * Gets the voxel at the given coordinates.
-   * @param {number} x - The x coordinate.
-   * @param {number} y - The y coordinate.
-   * @param {number} z - The z coordinate.
-   *
-   * @returns {Voxel|undefined} The voxel or undefined if it does not exist.
-   */
-  getVoxel(x, y, z) {
-    const index = x + y * this.size + z * this.size * this.size;
-    if (index < 0 || index >= this.chunks.length) {
-      return undefined;
-    }
-    return this.chunks[index];
-  }
-
-  save() {
-    return JSON.stringify({
-      x: this.x,
-      y: this.y,
-      z: this.z,
-      size: this.size,
-      voxels: this.voxels.map((/** @type {Voxel} */ voxel) => voxel.save()),
-    });
-  }
-
-  load(data) {
-    const parsedData = JSON.parse(data);
-    this.x = parsedData.x;
-    this.y = parsedData.y;
-    this.z = parsedData.z;
-    this.size = parsedData.size;
-    this.voxels = parsedData.voxels.map((/** @type {bigint} */ voxelData) => {
-      const voxel = new Voxel();
-      voxel.load(voxelData);
-      return voxel;
-    });
-  }
+  load(data) {}
 }

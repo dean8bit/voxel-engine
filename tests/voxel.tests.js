@@ -1,4 +1,4 @@
-import Voxel from "../entities/world/voxel.js";
+import Voxel from "../entities/world/tools.js";
 
 class VoxelTests {
   constructor() {

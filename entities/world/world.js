@@ -2,6 +2,35 @@ import * as THREE from "../../libs/three.module.js";
 
 import { Chunk } from "./chunk.js";
 
+/*
+ * 3D representation of the voxel corners:
+ *
+ *        TBL-------TBR
+ *       / |       / |
+ *     TFL-------TFR |
+ *     |  |      |   |
+ *     |  BBL----|--BBR
+ *     | /       | /
+ *    BFL-------BFR
+ *
+ * TFL - TopFrontLeft
+ * TFR - TopFrontRight
+ * TBL - TopBackLeft
+ * TBR - TopBackRight
+ * BFL - BottomFrontLeft
+ * BFR - BottomFrontRight
+ * BBL - BottomBackLeft
+ * BBR - BottomBackRight
+ *
+ * BIT FLAGS
+ *       [DECOR ]A [TYPE        ] [Corner ]
+ * [1111 1111 1111 1111 1111 1111 1111 1111]
+ * [DECOR]    - Decoration 7bits
+ * [A]        - Active 1bit
+ * [TYPE]     - Type 8bits
+ * [Corner]   - Corner 16bits
+ */
+
 /**
  * Represents the world in the voxel game, managing chunks of the world.
  * @extends THREE.Object3D
