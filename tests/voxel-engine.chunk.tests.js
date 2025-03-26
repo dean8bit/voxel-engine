@@ -14,15 +14,57 @@ export default class ChunkTests {
      * An array of tests, each represented by a name and a boolean result.
      * @type {Array.<Function>}
      */
-    this.tests = [this.SetGetVoxelActive];
+    this.tests = [
+      this.GetFlatIndex1,
+      this.GetSetActive1,
+      this.GetSetActive2,
+      this.GetSetBlockType1,
+    ];
   }
 
-  SetGetVoxelActive() {
-    var chunk = new Chunk(16, 16, 16);
-    chunk.setActive(0, 0, 0, 1);
+  GetFlatIndex1() {
+    var c = new Chunk(16, 16, 16);
+    var index = c._get_flat_index(12, 13, 14);
     return {
-      name: "SetGetVoxelActive",
-      result: chunk.getActive(0, 0, 0) === 1,
+      name: "GetFlatIndex1",
+      result: index === 3804,
+    };
+  }
+
+  GetSetActive1() {
+    var c = new Chunk(16, 16, 16);
+    c.setVoxel(12, 12, 12, 0);
+    c.setActive(12, 12, 12, true);
+    var r = c.getActive(12, 12, 12);
+    var v = c.getVoxel(12, 12, 12);
+    return {
+      name: "GetSetActive1",
+      result: r === true && v === -0b10000000000000000000000000000000,
+    };
+  }
+
+  GetSetActive2() {
+    var c = new Chunk(16, 16, 16);
+    c.setVoxel(12, 12, 12, 0);
+    c.setActive(12, 12, 12, true);
+    c.setActive(12, 12, 12, false);
+    var r = c.getActive(12, 12, 12);
+    var v = c.getVoxel(12, 12, 12);
+    return {
+      name: "GetSetActive2",
+      result: r === false && v === 0b0,
+    };
+  }
+
+  GetSetBlockType1() {
+    var c = new Chunk(16, 16, 16);
+    c.setVoxel(12, 12, 12, 0);
+    c.setBlockType(12, 12, 12, 111);
+    var r = c.getBlockType(12, 12, 12);
+    console.log(c.getVoxel(12, 12, 12).toString(2));
+    return {
+      name: "GetSetBlockType1",
+      result: r === 111,
     };
   }
 

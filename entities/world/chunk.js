@@ -75,34 +75,49 @@ export class Chunk {
     this.voxels = new Array(this.width * this.height * this.depth);
   }
 
+  _get_flat_index(x, y, z) {
+    return x + this.width * (y + this.height * z);
+  }
+
   setVoxel(x, y, z, value) {
-    var index = x + this.width * (y + this.height * z);
+    var index = this._get_flat_index(x, y, z);
     if (index < 0 || index >= this.voxels.length) {
       return;
     }
-    this.voxels[x + this.width * (y + this.height * z)] = value;
+    this.voxels[index] = value;
   }
 
   getVoxel(x, y, z) {
-    var index = x + this.width * (y + this.height * z);
+    var index = this._get_flat_index(x, y, z);
     return this.voxels[index];
   }
 
   setActive(x, y, z, value) {
-    const voxel = this.getVoxel(x, y, z);
+    var voxel = this.getVoxel(x, y, z);
     if (voxel === undefined) {
       return;
     }
-    if (value) {
-      this.setVoxel(x, y, z, voxel | 0x80000000);
-    } else {
-      this.setVoxel(x, y, z, voxel & 0x7fffffff);
-    }
+    this.setVoxel(x, y, z, value ? voxel | (1 << 31) : voxel & (~1 << 31));
   }
 
   getActive(x, y, z) {
-    return (
-      (this.voxels[x + this.width * (y + this.height * z)] & 0x80000000) >> 31
-    );
+    var voxel = this.getVoxel(x, y, z);
+    return (voxel & (1 << 31)) !== 0;
+  }
+
+  setBlockType(x, y, z, value) {
+    var voxel = this.getVoxel(x, y, z);
+    if (voxel === undefined) {
+      return;
+    }
+    const mask = 0xfff << 8;
+    voxel &= ~mask;
+    value = (value & 0xfff) << 8;
+    this.setVoxel(x, y, z, voxel | value);
+  }
+
+  getBlockType(x, y, z) {
+    var voxel = this.getVoxel(x, y, z);
+    return (voxel & (0xfff << 8)) >> 8;
   }
 }
