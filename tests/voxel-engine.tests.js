@@ -28,6 +28,8 @@ export default class Tests {
    * @returns {boolean} True if all tests pass, otherwise false.
    */
   run() {
+    // @ts-ignore
+    console.log(`Running tests for class: ${this.constructor.name}`);
     let success = true;
     this.tests.forEach((test) => {
       var r = test();

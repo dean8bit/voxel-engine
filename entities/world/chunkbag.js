@@ -1,5 +1,5 @@
 //@ts-check
-import { Chunk } from "./chunk";
+import { Chunk } from "./chunk.js";
 
 export default class ChunkBag {
   /**

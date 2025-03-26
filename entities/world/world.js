@@ -61,7 +61,7 @@ export class World extends THREE.Object3D {
    * @param {number} z - The z-coordinate of the voxel.
    * @returns {number} The voxel at the specified coordinates, or undefined if the chunk is not found.
    */
-  getVoxel(x, y, z) {
+  getVoxelData(x, y, z) {
     const chunkX = Math.floor(x / this.chunkWidth);
     const chunkY = Math.floor(y / this.chunkHeight);
     const chunkZ = Math.floor(z / this.chunkDepth);
@@ -87,7 +87,7 @@ export class World extends THREE.Object3D {
    * @param {number} z - The z-coordinate of the voxel.
    * @param {number} value - The value to set for the voxel.
    */
-  setVoxel(x, y, z, value) {
+  setVoxelData(x, y, z, value) {
     const chunkX = Math.floor(x / this.chunkWidth);
     const chunkY = Math.floor(y / this.chunkHeight);
     const chunkZ = Math.floor(z / this.chunkDepth);
