@@ -1,47 +1,45 @@
+//@ts-check
 /**
  * Represents a chunk in the voxel game.
  */
 export class Chunk {
   /**
-   * The xyz size of the chunk (length of one side).
-   * @type {number} size - The size of the chunk (length of one side).
+   * The width of the chunk.
+   * @type {number}
+   * @default 16
    */
-  size = 16;
+  width = 16;
 
   /**
-   * A flat array representing the 3d voxels.
+   * The height of the chunk.
+   * @type {number}
+   * @default 16
+   */
+  height = 16;
+
+  /**
+   * The depth of the chunk.
+   * @type {number}
+   * @default 16
+   */
+  depth = 16;
+
+  /**
+   * A flat array representing the 3D voxels.
    * @type {Array<number>}
    */
-  chunks = [];
+  voxels = [];
 
   /**
    * Creates an instance of Chunk.
-   * @param {number} size - The size of the chunk (length of one side).
+   * @param {number} width - The width of the chunk.
+   * @param {number} height - The height of the chunk.
+   * @param {number} depth - The depth
    */
-  constructor(size) {
-    this.size = size;
+  constructor(width, height, depth) {
+    this.width = width;
+    this.height = height;
+    this.depth = depth;
+    this.voxels = new Array(this.width * this.height * this.depth);
   }
-
-  /**
-   * Initialize chunk (and voxels) with the given size.
-   * @param {number} [template]
-   */
-  initialize(template = null) {
-    this._initializeVoxels(template);
-  }
-
-  /**
-   * Creates an instance of a chunk
-   * @param {number} [template]
-   */
-  _initializeVoxels(template = null) {
-    this.chunks = new Array(this.size * this.size * this.size);
-    for (let i = 0; i < this.chunks.length; i++) {
-      this.chunks[i] = template || 0;
-    }
-  }
-
-  save() {}
-
-  load(data) {}
 }

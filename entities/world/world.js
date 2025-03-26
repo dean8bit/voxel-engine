@@ -1,6 +1,8 @@
+//@ts-check
 import * as THREE from "../../libs/three.module.js";
-
 import { Chunk } from "./chunk.js";
+
+import ChunkBag from "./chunkbag.js";
 
 /*
  * 3D representation of the voxel corners:
@@ -36,57 +38,73 @@ import { Chunk } from "./chunk.js";
  * Represents the world in the voxel game, managing chunks of the world.
  * @extends THREE.Object3D
  */
+/**
+ * Represents the world in the voxel game, extending THREE.Object3D.
+ * Manages a collection of chunks and provides methods to interact with voxels.
+ */
 export class World extends THREE.Object3D {
   /**
-   * A dictionary to store chunks with their keys.
-   * @type {Object.<string, Chunk>}
+   * The dictionary of chunks
+   * @type {ChunkBag}
    */
-  chunks = {};
+  chunks = new ChunkBag();
+
+  chunkWidth = 16;
+  chunkHeight = 32;
+  chunkDepth = 16;
 
   /**
-   * Generates a unique key for a chunk based on its coordinates.
-   * @param {number} x - The x-coordinate of the chunk.
-   * @param {number} y - The y-coordinate of the chunk.
-   * @param {number} z - The z-coordinate of the chunk.
-   * @returns {string} The unique key for the chunk.
-   * @private
+   * Retrieves the voxel at the specified coordinates.
+   *
+   * @param {number} x - The x-coordinate of the voxel.
+   * @param {number} y - The y-coordinate of the voxel.
+   * @param {number} z - The z-coordinate of the voxel.
+   * @returns {number} The voxel at the specified coordinates, or undefined if the chunk is not found.
    */
-  _chunkKey(x, y, z) {
-    return `${x},${y},${z}`;
+  getVoxel(x, y, z) {
+    const chunkX = Math.floor(x / this.chunkWidth);
+    const chunkY = Math.floor(y / this.chunkHeight);
+    const chunkZ = Math.floor(z / this.chunkDepth);
+
+    const chunk = this.chunks.getChunk(chunkX, chunkY, chunkZ);
+    if (chunk) {
+      const voxelX = x % this.chunkWidth;
+      const voxelY = y % this.chunkHeight;
+      const voxelZ = z % this.chunkDepth;
+      return chunk[
+        voxelX +
+          voxelY * this.chunkWidth +
+          voxelZ * this.chunkWidth * this.chunkHeight
+      ];
+    }
   }
 
   /**
-   * Adds a chunk to the world at the specified coordinates.
-   * @param {number} x - The x-coordinate of the chunk.
-   * @param {number} y - The y-coordinate of the chunk.
-   * @param {number} z - The z-coordinate of the chunk.
-   * @param {Chunk} chunk - The chunk to add.
+   * Sets the value of a voxel at the specified coordinates.
+   *
+   * @param {number} x - The x-coordinate of the voxel.
+   * @param {number} y - The y-coordinate of the voxel.
+   * @param {number} z - The z-coordinate of the voxel.
+   * @param {number} value - The value to set for the voxel.
    */
-  addChunk(x, y, z, chunk) {
-    const key = this._chunkKey(x, y, z);
-    this.chunks[key] = chunk;
-  }
+  setVoxel(x, y, z, value) {
+    const chunkX = Math.floor(x / this.chunkWidth);
+    const chunkY = Math.floor(y / this.chunkHeight);
+    const chunkZ = Math.floor(z / this.chunkDepth);
 
-  /**
-   * Retrieves a chunk from the world at the specified coordinates.
-   * @param {number} x - The x-coordinate of the chunk.
-   * @param {number} y - The y-coordinate of the chunk.
-   * @param {number} z - The z-coordinate of the chunk.
-   * @returns {Chunk|undefined} The chunk at the specified coordinates, or undefined if it does not exist.
-   */
-  getChunk(x, y, z) {
-    const key = this._chunkKey(x, y, z);
-    return this.chunks[key];
-  }
+    let chunk = this.chunks.getChunk(chunkX, chunkY, chunkZ);
+    if (!chunk) {
+      chunk = new Chunk(this.chunkWidth, this.chunkHeight, this.chunkDepth);
+      this.chunks.addChunk(chunkX, chunkY, chunkZ, chunk);
+    }
 
-  /**
-   * Removes a chunk from the world at the specified coordinates.
-   * @param {number} x - The x-coordinate of the chunk.
-   * @param {number} y - The y-coordinate of the chunk.
-   * @param {number} z - The z-coordinate of the chunk.
-   */
-  removeChunk(x, y, z) {
-    const key = this._chunkKey(x, y, z);
-    delete this.chunks[key];
+    const voxelX = x % this.chunkWidth;
+    const voxelY = y % this.chunkHeight;
+    const voxelZ = z % this.chunkDepth;
+    chunk[
+      voxelX +
+        voxelY * this.chunkWidth +
+        voxelZ * this.chunkWidth * this.chunkHeight
+    ] = value;
   }
 }
