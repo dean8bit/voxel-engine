@@ -110,10 +110,7 @@ export class Chunk {
     if (voxel === undefined) {
       return;
     }
-    const mask = 0xfff << 8;
-    voxel &= ~mask;
-    value = (value & 0xfff) << 8;
-    this.setVoxel(x, y, z, voxel | value);
+    this.setVoxel(x, y, z, (voxel & (~0xfff << 8)) | ((value & 0xfff) << 8));
   }
 
   getBlockType(x, y, z) {
@@ -126,10 +123,7 @@ export class Chunk {
     if (voxel === undefined) {
       return;
     }
-    const mask = 0xff << 20;
-    voxel &= ~mask;
-    value = (value & 0xff) << 20;
-    this.setVoxel(x, y, z, voxel | value);
+    this.setVoxel(x, y, z, (voxel & (~0xff << 20)) | ((value & 0xff) << 20));
   }
 
   getDecoration(x, y, z) {
@@ -147,9 +141,6 @@ export class Chunk {
     if (voxel === undefined) {
       return;
     }
-    const mask = 0xff;
-    voxel &= ~mask;
-    value = value & 0xff;
-    this.setVoxel(x, y, z, voxel | value);
+    this.setVoxel(x, y, z, (voxel & ~0xff) | (value & 0xff));
   }
 }
