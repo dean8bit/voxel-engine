@@ -1,1 +1,1 @@
-import "./voxel.tests.js";
+import "./tests.js";
