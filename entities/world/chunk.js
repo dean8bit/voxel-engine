@@ -136,4 +136,20 @@ export class Chunk {
     var voxel = this.getVoxel(x, y, z);
     return (voxel & (0xff << 20)) >> 20;
   }
+
+  getCorner(x, y, z) {
+    var voxel = this.getVoxel(x, y, z);
+    return voxel & 0xff;
+  }
+
+  setCorner(x, y, z, value) {
+    var voxel = this.getVoxel(x, y, z);
+    if (voxel === undefined) {
+      return;
+    }
+    const mask = 0xff;
+    voxel &= ~mask;
+    value = value & 0xff;
+    this.setVoxel(x, y, z, voxel | value);
+  }
 }

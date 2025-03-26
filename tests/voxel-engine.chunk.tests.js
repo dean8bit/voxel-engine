@@ -22,6 +22,8 @@ export default class ChunkTests {
       this.GetSetBlockType2,
       this.GetSetDecoration1,
       this.GetSetDecoration2,
+      this.GetSetCorner1,
+      this.GetSetCorner2,
     ];
   }
 
@@ -98,12 +100,36 @@ export default class ChunkTests {
   GetSetDecoration2() {
     var c = new Chunk(16, 16, 16);
     c.setVoxel(12, 12, 12, 0);
-    c.setDecoration(12, 12, 12, 0b11111111);
+    c.setDecoration(12, 12, 12, 0b10101010);
     var r = c.getDecoration(12, 12, 12);
     var v = c.getVoxel(12, 12, 12);
     return {
       name: "GetSetDecoration2",
-      result: r === 0b11111111 && v === 0b1111111100000000000000000000,
+      result: r === 0b10101010 && v === 0b1010101000000000000000000000,
+    };
+  }
+
+  GetSetCorner1() {
+    var c = new Chunk(16, 16, 16);
+    c.setVoxel(12, 12, 12, 0);
+    c.setCorner(12, 12, 12, 255);
+    var r = c.getCorner(12, 12, 12);
+    var v = c.getVoxel(12, 12, 12);
+    return {
+      name: "GetSetCorner1",
+      result: r === 255 && v === 0b11111111,
+    };
+  }
+
+  GetSetCorner2() {
+    var c = new Chunk(16, 16, 16);
+    c.setVoxel(12, 12, 12, 0);
+    c.setCorner(12, 12, 12, 0b10101010);
+    var r = c.getCorner(12, 12, 12);
+    var v = c.getVoxel(12, 12, 12);
+    return {
+      name: "GetSetCorner2",
+      result: r === 0b10101010 && v === 0b10101010,
     };
   }
 
