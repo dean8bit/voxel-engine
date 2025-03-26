@@ -69,7 +69,7 @@ export class World extends THREE.Object3D {
 
   /**
    * Gets the chunk index for the specified coordinates.
-   *
+   * @private
    * @param {number} x - The x-coordinate.
    * @param {number} y - The y-coordinate.
    * @param {number} z - The z-coordinate.
@@ -85,6 +85,7 @@ export class World extends THREE.Object3D {
 
   /**
    * Gets the local coordinates of a voxel within a chunk.
+   * @private
    * @param {number} x - The x-coordinate.
    * @param {number} y - The y-coordinate.
    * @param {number} z - The z-coordinate.

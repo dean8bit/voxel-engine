@@ -14,7 +14,12 @@ export default class WorldTests {
      * An array of tests, each represented by a name and a boolean result.
      * @type {Array.<Function>}
      */
-    this.tests = [this.SetGetVoxel1, this.SetGetVoxel2];
+    this.tests = [
+      this.SetGetVoxel1,
+      this.SetGetVoxel2,
+      this.SetGetVoxel3,
+      this.SetGetVoxel4,
+    ];
   }
 
   SetGetVoxel1() {
@@ -37,6 +42,35 @@ export default class WorldTests {
       result:
         world.getVoxelData(0, 0, 0) === 1 &&
         world.getVoxelData(400, 400, 400) === 1 &&
+        Object.keys(world.chunks.chunks).length === 2,
+    };
+  }
+
+  SetGetVoxel3() {
+    var world = new World();
+    world.setVoxelData(0, 0, 0, 1);
+    world.setVoxelData(400, 400, 400, 1);
+    world.setVoxelData(400, 400, 400, 2);
+    return {
+      name: "SetGetVoxel3",
+      result:
+        world.getVoxelData(0, 0, 0) === 1 &&
+        world.getVoxelData(400, 400, 400) === 2 &&
+        Object.keys(world.chunks.chunks).length === 2,
+    };
+  }
+
+  SetGetVoxel4() {
+    var world = new World();
+    world.setVoxelData(0, 0, 0, 1);
+    world.setVoxelData(400, 400, 400, 1);
+    world.setVoxelData(400, 400, 400, 2);
+    world.setVoxelData(0, 0, 0, 0);
+    return {
+      name: "SetGetVoxel4",
+      result:
+        world.getVoxelData(0, 0, 0) === 0 &&
+        world.getVoxelData(400, 400, 400) === 2 &&
         Object.keys(world.chunks.chunks).length === 2,
     };
   }
