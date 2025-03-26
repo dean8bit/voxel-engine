@@ -81,10 +81,9 @@ export class Chunk {
 
   setVoxel(x, y, z, value) {
     var index = this._get_flat_index(x, y, z);
-    if (index < 0 || index >= this.voxels.length) {
-      return;
+    if (index >= 0 && index < this.voxels.length) {
+      this.voxels[index] = value;
     }
-    this.voxels[index] = value;
   }
 
   getVoxel(x, y, z) {
@@ -94,10 +93,9 @@ export class Chunk {
 
   setActive(x, y, z, value) {
     var voxel = this.getVoxel(x, y, z);
-    if (voxel === undefined) {
-      return;
+    if (voxel !== undefined) {
+      this.setVoxel(x, y, z, value ? voxel | (1 << 31) : voxel & (~1 << 31));
     }
-    this.setVoxel(x, y, z, value ? voxel | (1 << 31) : voxel & (~1 << 31));
   }
 
   getActive(x, y, z) {
@@ -107,10 +105,9 @@ export class Chunk {
 
   setBlockType(x, y, z, value) {
     var voxel = this.getVoxel(x, y, z);
-    if (voxel === undefined) {
-      return;
+    if (voxel !== undefined) {
+      this.setVoxel(x, y, z, (voxel & (~0xfff << 8)) | ((value & 0xfff) << 8));
     }
-    this.setVoxel(x, y, z, (voxel & (~0xfff << 8)) | ((value & 0xfff) << 8));
   }
 
   getBlockType(x, y, z) {
@@ -120,10 +117,9 @@ export class Chunk {
 
   setDecoration(x, y, z, value) {
     var voxel = this.getVoxel(x, y, z);
-    if (voxel === undefined) {
-      return;
+    if (voxel !== undefined) {
+      this.setVoxel(x, y, z, (voxel & (~0xff << 20)) | ((value & 0xff) << 20));
     }
-    this.setVoxel(x, y, z, (voxel & (~0xff << 20)) | ((value & 0xff) << 20));
   }
 
   getDecoration(x, y, z) {
@@ -138,9 +134,8 @@ export class Chunk {
 
   setCorner(x, y, z, value) {
     var voxel = this.getVoxel(x, y, z);
-    if (voxel === undefined) {
-      return;
+    if (voxel !== undefined) {
+      this.setVoxel(x, y, z, (voxel & ~0xff) | (value & 0xff));
     }
-    this.setVoxel(x, y, z, (voxel & ~0xff) | (value & 0xff));
   }
 }
