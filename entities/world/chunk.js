@@ -120,4 +120,20 @@ export class Chunk {
     var voxel = this.getVoxel(x, y, z);
     return (voxel & (0xfff << 8)) >> 8;
   }
+
+  setDecoration(x, y, z, value) {
+    var voxel = this.getVoxel(x, y, z);
+    if (voxel === undefined) {
+      return;
+    }
+    const mask = 0xff << 20;
+    voxel &= ~mask;
+    value = (value & 0xff) << 20;
+    this.setVoxel(x, y, z, voxel | value);
+  }
+
+  getDecoration(x, y, z) {
+    var voxel = this.getVoxel(x, y, z);
+    return (voxel & (0xff << 20)) >> 20;
+  }
 }
