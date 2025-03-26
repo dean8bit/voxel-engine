@@ -27,8 +27,9 @@ import { Chunk } from "./chunk.js";
  * [1111 1111 1111 1111 1111 1111 1111 1111]
  * [DECOR]    - Decoration 7bits
  * [A]        - Active 1bit
- * [TYPE]     - Type 8bits
- * [Corner]   - Corner 16bits
+ * [TYPE]     - Type 12bits
+ * [Corner]   - Corner 8bits
+ * Unused 4 bits (?water?)
  */
 
 /**
