@@ -4,36 +4,6 @@ import { Chunk } from "./chunk.js";
 
 import ChunkBag from "./chunkbag.js";
 
-/*
- * 3D representation of the voxel corners:
- *
- *        TBL-------TBR
- *       / |       / |
- *     TFL-------TFR |
- *     |  |      |   |
- *     |  BBL----|--BBR
- *     | /       | /
- *    BFL-------BFR
- *
- * TFL - TopFrontLeft
- * TFR - TopFrontRight
- * TBL - TopBackLeft
- * TBR - TopBackRight
- * BFL - BottomFrontLeft
- * BFR - BottomFrontRight
- * BBL - BottomBackLeft
- * BBR - BottomBackRight
- *
- * BIT FLAGS
- *       [DECOR ]A [TYPE        ] [Corner ]
- * [1111 1111 1111 1111 1111 1111 1111 1111]
- * [DECOR]    - Decoration 7bits
- * [A]        - Active 1bit
- * [TYPE]     - Type 12bits
- * [Corner]   - Corner 8bits
- * Unused 4 bits (?water?)
- */
-
 /**
  * Represents the world in the voxel game, managing chunks of the world.
  * @extends THREE.Object3D
@@ -99,31 +69,32 @@ export class World extends THREE.Object3D {
     };
   }
 
+  _getChunk(x, y, z, create = false) {
+    let chunk = this.chunks.getChunk(x, y, z);
+    if (!chunk && create) {
+      chunk = new Chunk(this.chunkWidth, this.chunkHeight, this.chunkDepth);
+      this.chunks.addChunk(x, y, z, chunk);
+    }
+    return chunk;
+  }
+
   /**
    * Retrieves the voxel at the specified coordinates.
    *
    * @param {number} x - The x-coordinate of the voxel.
    * @param {number} y - The y-coordinate of the voxel.
    * @param {number} z - The z-coordinate of the voxel.
-   * @returns {number} The voxel at the specified coordinates, or undefined if the chunk is not found.
+   * @returns {number|undefined} The voxel at the specified coordinates, or undefined if the chunk is not found.
    */
   getVoxelData(x, y, z) {
     const chunkIndex = this._getChunkIndex(x, y, z);
-
-    const chunk = this.chunks.getChunk(
-      chunkIndex.x,
-      chunkIndex.y,
-      chunkIndex.z
-    );
+    const chunk = this._getChunk(chunkIndex.x, chunkIndex.y, chunkIndex.z);
 
     if (chunk) {
       const voxelIndex = this._getChunkLocalCoordinates(x, y, z);
-      return chunk[
-        voxelIndex.x +
-          voxelIndex.y * this.chunkWidth +
-          voxelIndex.z * this.chunkWidth * this.chunkHeight
-      ];
+      return chunk.getVoxel(voxelIndex.x, voxelIndex.y, voxelIndex.z);
     }
+    return undefined;
   }
 
   /**
@@ -136,18 +107,13 @@ export class World extends THREE.Object3D {
    */
   setVoxelData(x, y, z, value) {
     const chunkIndex = this._getChunkIndex(x, y, z);
-
-    let chunk = this.chunks.getChunk(chunkIndex.x, chunkIndex.y, chunkIndex.z);
-    if (!chunk) {
-      chunk = new Chunk(this.chunkWidth, this.chunkHeight, this.chunkDepth);
-      this.chunks.addChunk(chunkIndex.x, chunkIndex.y, chunkIndex.z, chunk);
-    }
-
+    const chunk = this._getChunk(
+      chunkIndex.x,
+      chunkIndex.y,
+      chunkIndex.z,
+      true
+    );
     const voxelIndex = this._getChunkLocalCoordinates(x, y, z);
-    chunk[
-      voxelIndex.x +
-        voxelIndex.y * this.chunkWidth +
-        voxelIndex.z * this.chunkWidth * this.chunkHeight
-    ] = value;
+    chunk.setVoxel(voxelIndex.x, voxelIndex.y, voxelIndex.z, value);
   }
 }

@@ -29,7 +29,9 @@ export default class WorldTests {
       name: "SetGetVoxel",
       result:
         world.getVoxelData(0, 0, 0) === 1 &&
-        Object.keys(world.chunks.chunks).length === 1,
+        Object.keys(world.chunks.chunks).length === 1 &&
+        world.chunks.getChunk(0, 0, 0).voxels.length ===
+          world.chunkWidth * world.chunkDepth * world.chunkHeight,
     };
   }
 
@@ -72,6 +74,15 @@ export default class WorldTests {
         world.getVoxelData(0, 0, 0) === 0 &&
         world.getVoxelData(400, 400, 400) === 2 &&
         Object.keys(world.chunks.chunks).length === 2,
+    };
+  }
+
+  SetGetVoxelActive1() {
+    var world = new World();
+    world.setVoxelData(0, 0, 0, 1);
+    return {
+      name: "SetGetVoxelActive1",
+      result: world.getVoxelData(0, 0, 0) === 1,
     };
   }
 

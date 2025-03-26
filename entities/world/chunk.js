@@ -1,4 +1,36 @@
 //@ts-check
+
+/*
+ * 3D representation of the voxel corners:
+ *
+ *        TBL-------TBR
+ *       / |       / |
+ *     TFL-------TFR |
+ *     |  |      |   |
+ *     |  BBL----|--BBR
+ *     | /       | /
+ *    BFL-------BFR
+ *
+ * TFL - TopFrontLeft
+ * TFR - TopFrontRight
+ * TBL - TopBackLeft
+ * TBR - TopBackRight
+ * BFL - BottomFrontLeft
+ * BFR - BottomFrontRight
+ * BBL - BottomBackLeft
+ * BBR - BottomBackRight
+ *
+ * BIT FLAGS
+ * [A][Typ]  [Decoration    ]  [Block Type             ]  [Corner        ]
+ * [1 1 1 1  1 1 1 1  1 1 1 1  1 1 1 1  1 1 1 1  1 1 1 1  1 1 1 1  1 1 1 1]
+ *
+ * [A]            - 1 bit         - 0: Inactive, 1: Active
+ * [Typ]e         - 3 bits        - The type of data for the next 28 bits
+ * [Decoration]   - 8 bits        - The decoration on the block
+ * [Block Type]   - 12 bits       - The block type
+ * [Corner]       - 8 bits        - The on off state of each corner
+ */
+
 /**
  * Represents a chunk in the voxel game.
  */
@@ -41,5 +73,36 @@ export class Chunk {
     this.height = height;
     this.depth = depth;
     this.voxels = new Array(this.width * this.height * this.depth);
+  }
+
+  setVoxel(x, y, z, value) {
+    var index = x + this.width * (y + this.height * z);
+    if (index < 0 || index >= this.voxels.length) {
+      return;
+    }
+    this.voxels[x + this.width * (y + this.height * z)] = value;
+  }
+
+  getVoxel(x, y, z) {
+    var index = x + this.width * (y + this.height * z);
+    return this.voxels[index];
+  }
+
+  setActive(x, y, z, value) {
+    const voxel = this.getVoxel(x, y, z);
+    if (voxel === undefined) {
+      return;
+    }
+    if (value) {
+      this.setVoxel(x, y, z, voxel | 0x80000000);
+    } else {
+      this.setVoxel(x, y, z, voxel & 0x7fffffff);
+    }
+  }
+
+  getActive(x, y, z) {
+    return (
+      (this.voxels[x + this.width * (y + this.height * z)] & 0x80000000) >> 31
+    );
   }
 }
