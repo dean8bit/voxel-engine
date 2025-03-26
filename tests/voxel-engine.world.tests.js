@@ -20,7 +20,12 @@ export default class WorldTests {
   SetGetVoxel1() {
     var world = new World();
     world.setVoxelData(0, 0, 0, 1);
-    return { name: "SetGetVoxel", result: world.getVoxelData(0, 0, 0) === 1 };
+    return {
+      name: "SetGetVoxel",
+      result:
+        world.getVoxelData(0, 0, 0) === 1 &&
+        Object.keys(world.chunks.chunks).length === 1,
+    };
   }
 
   SetGetVoxel2() {
@@ -46,7 +51,7 @@ export default class WorldTests {
     let success = true;
     this.tests.forEach((test) => {
       var r = test();
-      console.log(r.name, r.result);
+      console.log("\t" + r.name, r.result);
       if (!r.result) success = false;
     });
     return success;

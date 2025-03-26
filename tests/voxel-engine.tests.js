@@ -33,7 +33,7 @@ export default class Tests {
     let success = true;
     this.tests.forEach((test) => {
       var r = test();
-      console.log(r.name, r.result);
+      console.log("\t" + r.name, r.result);
       if (!r.result) success = false;
     });
     return success;
