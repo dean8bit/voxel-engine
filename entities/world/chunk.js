@@ -110,7 +110,7 @@ export class Chunk {
    * @param {number} y - The y-coordinate.
    * @param {number} z - The z-coordinate.
    *
-   * @returns {number} The voxel value.
+   * @returns {number|undefined} The voxel value.
    */
   getVoxel(x, y, z) {
     var index = this._get_flat_index(x, y, z);
@@ -137,11 +137,11 @@ export class Chunk {
    * @param {number} y - The y-coordinate.
    * @param {number} z - The z-coordinate.
    *
-   * @returns {boolean} True if the voxel is active, false otherwise.
+   * @returns {boolean|undefined} True if the voxel is active, false otherwise.
    */
   getActive(x, y, z) {
     var voxel = this.getVoxel(x, y, z);
-    return (voxel & 0x80000000) !== 0;
+    return voxel !== undefined ? (voxel & 0x80000000) !== 0 : undefined;
   }
 
   /**
@@ -164,11 +164,11 @@ export class Chunk {
    * @param {number} y - The y-coordinate.
    * @param {number} z - The z-coordinate.
    *
-   * @returns {number} The block type.
+   * @returns {number|undefined} The block type.
    */
   getBlockType(x, y, z) {
     var voxel = this.getVoxel(x, y, z);
-    return (voxel & 0xfff00) >> 8;
+    return voxel !== undefined ? (voxel & 0xfff00) >> 8 : undefined;
   }
 
   /**
@@ -191,11 +191,11 @@ export class Chunk {
    * @param {number} y - The y-coordinate.
    * @param {number} z - The z-coordinate.
    *
-   * @returns {number} The decoration value.
+   * @returns {number|undefined} The decoration value.
    */
   getDecoration(x, y, z) {
     var voxel = this.getVoxel(x, y, z);
-    return (voxel & 0xff00000) >> 20;
+    return voxel !== undefined ? (voxel & 0xff00000) >> 20 : undefined;
   }
 
   /**
@@ -204,11 +204,11 @@ export class Chunk {
    * @param {number} y - The y-coordinate.
    * @param {number} z - The z-coordinate.
    *
-   * @returns {number} The corner state.
+   * @returns {number|undefined} The corner state.
    */
   getCorner(x, y, z) {
     var voxel = this.getVoxel(x, y, z);
-    return voxel & 0xff;
+    return voxel !== undefined ? voxel & 0xff : undefined;
   }
 
   /**
