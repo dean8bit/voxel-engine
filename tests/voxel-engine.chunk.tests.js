@@ -29,6 +29,7 @@ export default class ChunkTests {
       this.GetSetAll3,
       this.GetSetAll4,
       this.GetSetAll5,
+      this.Benchmark,
     ];
   }
 
@@ -222,6 +223,21 @@ export default class ChunkTests {
     return {
       name: "GetSetAll5",
       result: r,
+    };
+  }
+
+  Benchmark() {
+    var c = new Chunk(16, 16, 16);
+    var start = performance.now();
+    for (var i = 0; i < 1000000; i++) {
+      c.setVoxel(12, 12, 12, i);
+      c.getVoxel(12, 12, 12);
+    }
+    var end = performance.now();
+    console.log("\tChunk Benchmark time: " + (end - start) + "ms");
+    return {
+      name: "Benchmark",
+      result: end - start < 3,
     };
   }
 
