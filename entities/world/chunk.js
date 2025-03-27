@@ -33,6 +33,8 @@
 
 /**
  * Represents a chunk in the voxel game.
+ * There is a lot of repitition in this class, but it is done for performance reasons.
+ * Inlining and reducing function overhead.
  */
 export class Chunk {
   /**
@@ -98,7 +100,7 @@ export class Chunk {
    * @param {number} value - The voxel value to set.
    */
   setVoxel(x, y, z, value) {
-    var index = this._get_flat_index(x, y, z);
+    var index = x + this.width * (y + this.height * z);
     if (index >= 0 && index < this.voxels.length) {
       this.voxels[index] = value;
     }
@@ -113,8 +115,7 @@ export class Chunk {
    * @returns {number|undefined} The voxel value. Undefined if the voxel is out of bounds
    */
   getVoxel(x, y, z) {
-    var index = this._get_flat_index(x, y, z);
-    return this.voxels[index];
+    return this.voxels[x + this.width * (y + this.height * z)];
   }
 
   /**
@@ -125,7 +126,7 @@ export class Chunk {
    * @param {boolean} value - The active state to set (true for active, false for inactive).
    */
   setActive(x, y, z, value) {
-    var voxel = this.getVoxel(x, y, z);
+    var voxel = this.voxels[x + this.width * (y + this.height * z)];
     if (voxel !== undefined) {
       this.setVoxel(x, y, z, value ? voxel | 0x80000000 : voxel & ~0x80000000);
     }
@@ -140,7 +141,7 @@ export class Chunk {
    * @returns {boolean|undefined} True if the voxel is active, false otherwise. Undefined if the voxel is out of bounds
    */
   getActive(x, y, z) {
-    var voxel = this.getVoxel(x, y, z);
+    var voxel = this.voxels[x + this.width * (y + this.height * z)];
     return voxel !== undefined ? (voxel & 0x80000000) !== 0 : undefined;
   }
 
@@ -152,7 +153,7 @@ export class Chunk {
    * @param {number} value  - The block type to set.
    */
   setBlockType(x, y, z, value) {
-    var voxel = this.getVoxel(x, y, z);
+    var voxel = this.voxels[x + this.width * (y + this.height * z)];
     if (voxel !== undefined) {
       this.setVoxel(x, y, z, (voxel & ~0xfff00) | ((value & 0xfff) << 8));
     }
@@ -167,7 +168,7 @@ export class Chunk {
    * @returns {number|undefined} The block type. Undefined if the voxel is out of bounds
    */
   getBlockType(x, y, z) {
-    var voxel = this.getVoxel(x, y, z);
+    var voxel = this.voxels[x + this.width * (y + this.height * z)];
     return voxel !== undefined ? (voxel & 0xfff00) >> 8 : undefined;
   }
 
@@ -179,7 +180,7 @@ export class Chunk {
    * @param {number} value - The decoration value to set.
    */
   setDecoration(x, y, z, value) {
-    var voxel = this.getVoxel(x, y, z);
+    var voxel = this.voxels[x + this.width * (y + this.height * z)];
     if (voxel !== undefined) {
       this.setVoxel(x, y, z, (voxel & ~0xff00000) | ((value & 0xff) << 20));
     }
@@ -194,7 +195,7 @@ export class Chunk {
    * @returns {number|undefined} The decoration value. Undefined if the voxel is out of bounds
    */
   getDecoration(x, y, z) {
-    var voxel = this.getVoxel(x, y, z);
+    var voxel = this.voxels[x + this.width * (y + this.height * z)];
     return voxel !== undefined ? (voxel & 0xff00000) >> 20 : undefined;
   }
 
@@ -207,7 +208,7 @@ export class Chunk {
    * @returns {number|undefined} The corner state. Undefined if the voxel is out of bounds
    */
   getCorner(x, y, z) {
-    var voxel = this.getVoxel(x, y, z);
+    var voxel = this.voxels[x + this.width * (y + this.height * z)];
     return voxel !== undefined ? voxel & 0xff : undefined;
   }
 
@@ -219,7 +220,7 @@ export class Chunk {
    * @param {number} value - The corner state to set.
    */
   setCorner(x, y, z, value) {
-    var voxel = this.getVoxel(x, y, z);
+    var voxel = this.voxels[x + this.width * (y + this.height * z)];
     if (voxel !== undefined) {
       this.setVoxel(x, y, z, (voxel & ~0xff) | (value & 0xff));
     }
