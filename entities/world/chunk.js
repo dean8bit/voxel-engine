@@ -107,6 +107,17 @@ export class Chunk {
   }
 
   /**
+   * This method is unsafe (no bounds checking) and should be used with caution.
+   * @param {number} x
+   * @param {number} y
+   * @param {number} z
+   * @param {number} value
+   */
+  setVoxelFastUnsafe(x, y, z, value) {
+    this.voxels[x + this.width * (y + this.height * z)] = value;
+  }
+
+  /**
    * Gets the voxel value at the specified coordinates.
    * @param {number} x - The x-coordinate.
    * @param {number} y - The y-coordinate.
