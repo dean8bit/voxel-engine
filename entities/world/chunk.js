@@ -240,4 +240,16 @@ export class Chunk {
       this.voxels[index] = (voxel & ~0xff) | (value & 0xff);
     }
   }
+
+  getBuffer() {
+    return this.voxels.buffer;
+  }
+
+  reclaimBuffer() {
+    this.fromBuffer(this.voxels.buffer);
+  }
+
+  fromBuffer(buffer) {
+    this.voxels = new Uint32Array(buffer);
+  }
 }
