@@ -126,9 +126,10 @@ export class Chunk {
    * @param {boolean} value - The active state to set (true for active, false for inactive).
    */
   setActive(x, y, z, value) {
-    var voxel = this.voxels[x + this.width * (y + this.height * z)];
+    var index = x + this.width * (y + this.height * z);
+    var voxel = this.voxels[index];
     if (voxel !== undefined) {
-      this.setVoxel(x, y, z, value ? voxel | 0x80000000 : voxel & ~0x80000000);
+      this.voxels[index] = value ? voxel | 0x80000000 : voxel & ~0x80000000;
     }
   }
 
@@ -153,9 +154,10 @@ export class Chunk {
    * @param {number} value  - The block type to set.
    */
   setBlockType(x, y, z, value) {
-    var voxel = this.voxels[x + this.width * (y + this.height * z)];
+    var index = x + this.width * (y + this.height * z);
+    var voxel = this.voxels[index];
     if (voxel !== undefined) {
-      this.setVoxel(x, y, z, (voxel & ~0xfff00) | ((value & 0xfff) << 8));
+      this.voxels[index] = (voxel & ~0xfff00) | ((value & 0xfff) << 8);
     }
   }
 
@@ -180,9 +182,10 @@ export class Chunk {
    * @param {number} value - The decoration value to set.
    */
   setDecoration(x, y, z, value) {
-    var voxel = this.voxels[x + this.width * (y + this.height * z)];
+    var index = x + this.width * (y + this.height * z);
+    var voxel = this.voxels[index];
     if (voxel !== undefined) {
-      this.setVoxel(x, y, z, (voxel & ~0xff00000) | ((value & 0xff) << 20));
+      this.voxels[index] = (voxel & ~0xff00000) | ((value & 0xff) << 20);
     }
   }
 
@@ -220,9 +223,10 @@ export class Chunk {
    * @param {number} value - The corner state to set.
    */
   setCorner(x, y, z, value) {
-    var voxel = this.voxels[x + this.width * (y + this.height * z)];
+    var index = x + this.width * (y + this.height * z);
+    var voxel = this.voxels[index];
     if (voxel !== undefined) {
-      this.setVoxel(x, y, z, (voxel & ~0xff) | (value & 0xff));
+      this.voxels[index] = (voxel & ~0xff) | (value & 0xff);
     }
   }
 }
