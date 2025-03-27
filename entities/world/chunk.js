@@ -241,14 +241,31 @@ export class Chunk {
     }
   }
 
+  /**
+   * Returns the underlying ArrayBuffer of the voxel data.
+   * This can be used for efficient data transfer or manipulation.
+   *
+   * @returns {ArrayBuffer} The ArrayBuffer containing the voxel data.
+   */
   getBuffer() {
     return this.voxels.buffer;
   }
 
+  /**
+   * Reclaims the current buffer by reinitializing the voxel data
+   * from the existing ArrayBuffer. This can be used to reset or
+   * reuse the buffer without allocating new memory.
+   */
   reclaimBuffer() {
     this.fromBuffer(this.voxels.buffer);
   }
 
+  /**
+   * Initializes the voxel data from an existing ArrayBuffer.
+   * This allows sharing or reusing buffers between chunks.
+   *
+   * @param {ArrayBuffer} buffer - The ArrayBuffer to initialize the voxel data from.
+   */
   fromBuffer(buffer) {
     this.voxels = new Uint32Array(buffer);
   }
