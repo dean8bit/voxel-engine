@@ -110,7 +110,7 @@ export class Chunk {
    * @param {number} y - The y-coordinate.
    * @param {number} z - The z-coordinate.
    *
-   * @returns {number|undefined} The voxel value.
+   * @returns {number|undefined} The voxel value. Undefined if the voxel is out of bounds
    */
   getVoxel(x, y, z) {
     var index = this._get_flat_index(x, y, z);
@@ -137,7 +137,7 @@ export class Chunk {
    * @param {number} y - The y-coordinate.
    * @param {number} z - The z-coordinate.
    *
-   * @returns {boolean|undefined} True if the voxel is active, false otherwise.
+   * @returns {boolean|undefined} True if the voxel is active, false otherwise. Undefined if the voxel is out of bounds
    */
   getActive(x, y, z) {
     var voxel = this.getVoxel(x, y, z);
@@ -164,7 +164,7 @@ export class Chunk {
    * @param {number} y - The y-coordinate.
    * @param {number} z - The z-coordinate.
    *
-   * @returns {number|undefined} The block type.
+   * @returns {number|undefined} The block type. Undefined if the voxel is out of bounds
    */
   getBlockType(x, y, z) {
     var voxel = this.getVoxel(x, y, z);
@@ -191,7 +191,7 @@ export class Chunk {
    * @param {number} y - The y-coordinate.
    * @param {number} z - The z-coordinate.
    *
-   * @returns {number|undefined} The decoration value.
+   * @returns {number|undefined} The decoration value. Undefined if the voxel is out of bounds
    */
   getDecoration(x, y, z) {
     var voxel = this.getVoxel(x, y, z);
@@ -204,7 +204,7 @@ export class Chunk {
    * @param {number} y - The y-coordinate.
    * @param {number} z - The z-coordinate.
    *
-   * @returns {number|undefined} The corner state.
+   * @returns {number|undefined} The corner state. Undefined if the voxel is out of bounds
    */
   getCorner(x, y, z) {
     var voxel = this.getVoxel(x, y, z);
