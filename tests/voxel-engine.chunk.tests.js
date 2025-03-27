@@ -28,6 +28,7 @@ export default class ChunkTests {
       this.GetSetAll2,
       this.GetSetAll3,
       this.GetSetAll4,
+      this.GetSetAll5,
     ];
   }
 
@@ -201,6 +202,25 @@ export default class ChunkTests {
 
     return {
       name: "GetSetAll4",
+      result: r,
+    };
+  }
+
+  GetSetAll5() {
+    var c = new Chunk(16, 16, 16);
+    c.setActive(12, 12, 12, true);
+    c.setBlockType(12, 12, 12, 0);
+    c.setDecoration(12, 12, 12, 0);
+    c.setCorner(12, 12, 12, 0);
+    var r =
+      c.getActive(12, 12, 12) &&
+      c.getBlockType(12, 12, 12) === 0 &&
+      c.getDecoration(12, 12, 12) === 0 &&
+      c.getCorner(12, 12, 12) === 0;
+    var v = c.getVoxel(12, 12, 12);
+
+    return {
+      name: "GetSetAll5",
       result: r,
     };
   }
