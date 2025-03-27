@@ -94,31 +94,31 @@ export class Chunk {
   setActive(x, y, z, value) {
     var voxel = this.getVoxel(x, y, z);
     if (voxel !== undefined) {
-      this.setVoxel(x, y, z, value ? voxel | (1 << 31) : voxel & (~1 << 31));
+      this.setVoxel(x, y, z, value ? voxel | 0x80000000 : voxel & ~0x80000000);
     }
   }
 
   getActive(x, y, z) {
     var voxel = this.getVoxel(x, y, z);
-    return (voxel & (1 << 31)) !== 0;
+    return (voxel & 0x80000000) !== 0;
   }
 
   setBlockType(x, y, z, value) {
     var voxel = this.getVoxel(x, y, z);
     if (voxel !== undefined) {
-      this.setVoxel(x, y, z, (voxel & (~0xfff << 8)) | ((value & 0xfff) << 8));
+      this.setVoxel(x, y, z, (voxel & ~0xfff00) | ((value & 0xfff) << 8));
     }
   }
 
   getBlockType(x, y, z) {
     var voxel = this.getVoxel(x, y, z);
-    return (voxel & (0xfff << 8)) >> 8;
+    return (voxel & 0xfff00) >> 8;
   }
 
   setDecoration(x, y, z, value) {
     var voxel = this.getVoxel(x, y, z);
     if (voxel !== undefined) {
-      this.setVoxel(x, y, z, (voxel & (~0xff << 20)) | ((value & 0xff) << 20));
+      this.setVoxel(x, y, z, (voxel & ~0xff00000000) | ((value & 0xff) << 20));
     }
   }
 
