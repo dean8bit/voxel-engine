@@ -118,13 +118,13 @@ export class Chunk {
   setDecoration(x, y, z, value) {
     var voxel = this.getVoxel(x, y, z);
     if (voxel !== undefined) {
-      this.setVoxel(x, y, z, (voxel & ~0xff00000000) | ((value & 0xff) << 20));
+      this.setVoxel(x, y, z, (voxel & ~0xff00) | ((value & 0xff) << 8));
     }
   }
 
   getDecoration(x, y, z) {
     var voxel = this.getVoxel(x, y, z);
-    return (voxel & (0xff << 20)) >> 20;
+    return (voxel & 0xff00) >> 8;
   }
 
   getCorner(x, y, z) {
