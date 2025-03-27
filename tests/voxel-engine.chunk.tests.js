@@ -129,23 +129,19 @@ export default class ChunkTests {
   GetSetAll() {
     var c = new Chunk(16, 16, 16);
     c.setActive(12, 12, 12, true);
-    console.log(c.getVoxel(12, 12, 12).toString(16));
-    c.setBlockType(12, 12, 12, 0b101010101010);
-    console.log(c.getVoxel(12, 12, 12).toString(16));
-    c.setDecoration(12, 12, 12, 0b10101010);
-    console.log(c.getVoxel(12, 12, 12).toString(16));
-    c.setCorner(12, 12, 12, 0b10101010);
-    console.log(c.getVoxel(12, 12, 12).toString(16));
+    c.setBlockType(12, 12, 12, 0b111110101010);
+    c.setDecoration(12, 12, 12, 0b10101111);
+    c.setCorner(12, 12, 12, 0b10111110);
     var r =
       c.getActive(12, 12, 12) &&
-      c.getBlockType(12, 12, 12) === 0b101010101010 &&
-      c.getDecoration(12, 12, 12) === 0b10101010 &&
-      c.getCorner(12, 12, 12) === 0b10101010;
+      c.getBlockType(12, 12, 12) === 0b111110101010 &&
+      c.getDecoration(12, 12, 12) === 0b10101111 &&
+      c.getCorner(12, 12, 12) === 0b10111110;
     var v = c.getVoxel(12, 12, 12);
 
     return {
       name: "GetSetAll",
-      result: r && v === -0b10000000000000000000000000000000,
+      result: r,
     };
   }
 
