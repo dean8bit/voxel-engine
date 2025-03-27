@@ -252,7 +252,7 @@ export default class ChunkTests {
     console.log("\tChunk Benchmark 2 time: " + (end - start) + "ms");
     return {
       name: "Benchmark2",
-      result: end - start < 20,
+      result: end - start < 15,
     };
   }
 
