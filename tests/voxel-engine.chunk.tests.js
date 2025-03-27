@@ -101,9 +101,7 @@ export default class ChunkTests {
     var c = new Chunk(16, 16, 16);
     c.setVoxel(12, 12, 12, 0);
     c.setDecoration(12, 12, 12, 0b10101010);
-    console.log(c.getVoxel(12, 12, 12).toString(2));
     var r = c.getDecoration(12, 12, 12);
-    console.log(r.toString(2));
     var v = c.getVoxel(12, 12, 12);
     return {
       name: "GetSetDecoration2",
