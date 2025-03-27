@@ -24,6 +24,7 @@ export default class ChunkTests {
       this.GetSetDecoration2,
       this.GetSetCorner1,
       this.GetSetCorner2,
+      this.GetSetAll,
     ];
   }
 
@@ -38,7 +39,6 @@ export default class ChunkTests {
 
   GetSetActive1() {
     var c = new Chunk(16, 16, 16);
-    c.setVoxel(12, 12, 12, 0);
     c.setActive(12, 12, 12, true);
     var r = c.getActive(12, 12, 12);
     var v = c.getVoxel(12, 12, 12);
@@ -50,7 +50,6 @@ export default class ChunkTests {
 
   GetSetActive2() {
     var c = new Chunk(16, 16, 16);
-    c.setVoxel(12, 12, 12, 0);
     c.setActive(12, 12, 12, true);
     c.setActive(12, 12, 12, false);
     var r = c.getActive(12, 12, 12);
@@ -63,7 +62,6 @@ export default class ChunkTests {
 
   GetSetBlockType1() {
     var c = new Chunk(16, 16, 16);
-    c.setVoxel(12, 12, 12, 0);
     c.setBlockType(12, 12, 12, 111);
     var r = c.getBlockType(12, 12, 12);
     var v = c.getVoxel(12, 12, 12);
@@ -75,7 +73,6 @@ export default class ChunkTests {
 
   GetSetBlockType2() {
     var c = new Chunk(16, 16, 16);
-    c.setVoxel(12, 12, 12, 0);
     c.setBlockType(12, 12, 12, 0b111111111111);
     var r = c.getBlockType(12, 12, 12);
     var v = c.getVoxel(12, 12, 12);
@@ -87,7 +84,6 @@ export default class ChunkTests {
 
   GetSetDecoration1() {
     var c = new Chunk(16, 16, 16);
-    c.setVoxel(12, 12, 12, 0);
     c.setDecoration(12, 12, 12, 111);
     var r = c.getDecoration(12, 12, 12);
     var v = c.getVoxel(12, 12, 12);
@@ -99,7 +95,6 @@ export default class ChunkTests {
 
   GetSetDecoration2() {
     var c = new Chunk(16, 16, 16);
-    c.setVoxel(12, 12, 12, 0);
     c.setDecoration(12, 12, 12, 0b10101010);
     var r = c.getDecoration(12, 12, 12);
     var v = c.getVoxel(12, 12, 12);
@@ -111,7 +106,6 @@ export default class ChunkTests {
 
   GetSetCorner1() {
     var c = new Chunk(16, 16, 16);
-    c.setVoxel(12, 12, 12, 0);
     c.setCorner(12, 12, 12, 255);
     var r = c.getCorner(12, 12, 12);
     var v = c.getVoxel(12, 12, 12);
@@ -123,13 +117,35 @@ export default class ChunkTests {
 
   GetSetCorner2() {
     var c = new Chunk(16, 16, 16);
-    c.setVoxel(12, 12, 12, 0);
     c.setCorner(12, 12, 12, 0b10101010);
     var r = c.getCorner(12, 12, 12);
     var v = c.getVoxel(12, 12, 12);
     return {
       name: "GetSetCorner2",
       result: r === 0b10101010 && v === 0b10101010,
+    };
+  }
+
+  GetSetAll() {
+    var c = new Chunk(16, 16, 16);
+    c.setActive(12, 12, 12, true);
+    console.log(c.getVoxel(12, 12, 12).toString(16));
+    c.setBlockType(12, 12, 12, 0b101010101010);
+    console.log(c.getVoxel(12, 12, 12).toString(16));
+    c.setDecoration(12, 12, 12, 0b10101010);
+    console.log(c.getVoxel(12, 12, 12).toString(16));
+    c.setCorner(12, 12, 12, 0b10101010);
+    console.log(c.getVoxel(12, 12, 12).toString(16));
+    var r =
+      c.getActive(12, 12, 12) &&
+      c.getBlockType(12, 12, 12) === 0b101010101010 &&
+      c.getDecoration(12, 12, 12) === 0b10101010 &&
+      c.getCorner(12, 12, 12) === 0b10101010;
+    var v = c.getVoxel(12, 12, 12);
+
+    return {
+      name: "GetSetAll",
+      result: r && v === -0b10000000000000000000000000000000,
     };
   }
 

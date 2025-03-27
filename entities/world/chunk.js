@@ -73,6 +73,9 @@ export class Chunk {
     this.height = height;
     this.depth = depth;
     this.voxels = new Array(this.width * this.height * this.depth);
+    for (var i = 0; i < this.voxels.length; i++) {
+      this.voxels[i] = 0;
+    }
   }
 
   _get_flat_index(x, y, z) {
