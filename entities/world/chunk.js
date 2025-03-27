@@ -58,9 +58,9 @@ export class Chunk {
 
   /**
    * A flat array representing the 3D voxels.
-   * @type {Array<number>}
+   * @type {Uint32Array}
    */
-  voxels = [];
+  voxels = null;
 
   /**
    * Creates an instance of Chunk.
@@ -72,7 +72,7 @@ export class Chunk {
     this.width = width;
     this.height = height;
     this.depth = depth;
-    this.voxels = new Array(this.width * this.height * this.depth);
+    this.voxels = new Uint32Array(this.width * this.height * this.depth);
     for (var i = 0; i < this.voxels.length; i++) {
       this.voxels[i] = 0;
     }
