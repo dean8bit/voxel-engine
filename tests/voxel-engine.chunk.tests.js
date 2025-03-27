@@ -50,7 +50,7 @@ export default class ChunkTests {
     var v = c.getVoxel(12, 12, 12);
     return {
       name: "GetSetActive1",
-      result: r === true && v === -0b10000000000000000000000000000000,
+      result: r === true && v === 0b10000000000000000000000000000000,
     };
   }
 
@@ -163,7 +163,6 @@ export default class ChunkTests {
       c.getDecoration(12, 12, 12) === 0b11111111 &&
       c.getCorner(12, 12, 12) === 0b11111111;
     var v = c.getVoxel(12, 12, 12);
-    console.log(v.toString());
     return {
       name: "GetSetAll2",
       result: r,
