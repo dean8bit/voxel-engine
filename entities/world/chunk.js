@@ -78,10 +78,25 @@ export class Chunk {
     }
   }
 
+  /**
+   * Calculates the flat index for the 3D coordinates.
+   * @param {number} x - The x-coordinate.
+   * @param {number} y - The y-coordinate.
+   * @param {number} z - The z-coordinate.
+   *
+   * @returns {number} The flat index.
+   */
   _get_flat_index(x, y, z) {
     return x + this.width * (y + this.height * z);
   }
 
+  /**
+   * Sets the voxel value at the specified coordinates.
+   * @param {number} x - The x-coordinate.
+   * @param {number} y - The y-coordinate.
+   * @param {number} z - The z-coordinate.
+   * @param {number} value - The voxel value to set.
+   */
   setVoxel(x, y, z, value) {
     var index = this._get_flat_index(x, y, z);
     if (index >= 0 && index < this.voxels.length) {
@@ -89,11 +104,26 @@ export class Chunk {
     }
   }
 
+  /**
+   * Gets the voxel value at the specified coordinates.
+   * @param {number} x - The x-coordinate.
+   * @param {number} y - The y-coordinate.
+   * @param {number} z - The z-coordinate.
+   *
+   * @returns {number} The voxel value.
+   */
   getVoxel(x, y, z) {
     var index = this._get_flat_index(x, y, z);
     return this.voxels[index];
   }
 
+  /**
+   * Sets the active state of the voxel at the specified coordinates.
+   * @param {number} x - The x-coordinate.
+   * @param {number} y - The y-coordinate.
+   * @param {number} z - The z-coordinate.
+   * @param {boolean} value - The active state to set (true for active, false for inactive).
+   */
   setActive(x, y, z, value) {
     var voxel = this.getVoxel(x, y, z);
     if (voxel !== undefined) {
@@ -101,11 +131,26 @@ export class Chunk {
     }
   }
 
+  /**
+   * Gets the active state of the voxel at the specified coordinates.
+   * @param {number} x - The x-coordinate.
+   * @param {number} y - The y-coordinate.
+   * @param {number} z - The z-coordinate.
+   *
+   * @returns {boolean} True if the voxel is active, false otherwise.
+   */
   getActive(x, y, z) {
     var voxel = this.getVoxel(x, y, z);
     return (voxel & 0x80000000) !== 0;
   }
 
+  /**
+   * Sets the block type at the specified coordinates.
+   * @param {number} x  - The x-coordinate
+   * @param {number} y  - The y-coordinate
+   * @param {number} z  - The z-coordinate.
+   * @param {number} value  - The block type to set.
+   */
   setBlockType(x, y, z, value) {
     var voxel = this.getVoxel(x, y, z);
     if (voxel !== undefined) {
@@ -113,11 +158,26 @@ export class Chunk {
     }
   }
 
+  /**
+   * Gets the block type at the specified coordinates.
+   * @param {number} x - The x-coordinate.
+   * @param {number} y - The y-coordinate.
+   * @param {number} z - The z-coordinate.
+   *
+   * @returns {number} The block type.
+   */
   getBlockType(x, y, z) {
     var voxel = this.getVoxel(x, y, z);
     return (voxel & 0xfff00) >> 8;
   }
 
+  /**
+   * Sets the decoration value at the specified coordinates.
+   * @param {number} x - The x-coordinate.
+   * @param {number} y - The y-coordinate.
+   * @param {number} z - The z-coordinate.
+   * @param {number} value - The decoration value to set.
+   */
   setDecoration(x, y, z, value) {
     var voxel = this.getVoxel(x, y, z);
     if (voxel !== undefined) {
@@ -125,16 +185,39 @@ export class Chunk {
     }
   }
 
+  /**
+   * Gets the decoration value at the specified coordinates.
+   * @param {number} x - The x-coordinate.
+   * @param {number} y - The y-coordinate.
+   * @param {number} z - The z-coordinate.
+   *
+   * @returns {number} The decoration value.
+   */
   getDecoration(x, y, z) {
     var voxel = this.getVoxel(x, y, z);
     return (voxel & 0xff00000) >> 20;
   }
 
+  /**
+   * Gets the corner state at the specified coordinates.
+   * @param {number} x - The x-coordinate.
+   * @param {number} y - The y-coordinate.
+   * @param {number} z - The z-coordinate.
+   *
+   * @returns {number} The corner state.
+   */
   getCorner(x, y, z) {
     var voxel = this.getVoxel(x, y, z);
     return voxel & 0xff;
   }
 
+  /**
+   * Sets the corner state at the specified coordinates.
+   * @param {number} x - The x-coordinate.
+   * @param {number} y - The y-coordinate.
+   * @param {number} z - The z-coordinate.
+   * @param {number} value - The corner state to set.
+   */
   setCorner(x, y, z, value) {
     var voxel = this.getVoxel(x, y, z);
     if (voxel !== undefined) {
