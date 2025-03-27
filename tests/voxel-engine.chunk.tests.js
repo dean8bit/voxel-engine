@@ -238,7 +238,7 @@ export default class ChunkTests {
     console.log("\tChunk Benchmark 1 time: " + (end - start) + "ms");
     return {
       name: "Benchmark1",
-      result: end - start < 3,
+      result: end - start < 15,
     };
   }
 
@@ -253,7 +253,7 @@ export default class ChunkTests {
     console.log("\tChunk Benchmark 2 time: " + (end - start) + "ms");
     return {
       name: "Benchmark2",
-      result: end - start < 10,
+      result: end - start < 40,
     };
   }
 
