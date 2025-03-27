@@ -29,7 +29,8 @@ export default class ChunkTests {
       this.GetSetAll3,
       this.GetSetAll4,
       this.GetSetAll5,
-      this.Benchmark,
+      this.Benchmark1,
+      this.Benchmark2,
     ];
   }
 
@@ -226,7 +227,7 @@ export default class ChunkTests {
     };
   }
 
-  Benchmark() {
+  Benchmark1() {
     var c = new Chunk(16, 16, 16);
     var start = performance.now();
     for (var i = 0; i < 1000000; i++) {
@@ -234,10 +235,25 @@ export default class ChunkTests {
       c.getVoxel(12, 12, 12);
     }
     var end = performance.now();
-    console.log("\tChunk Benchmark time: " + (end - start) + "ms");
+    console.log("\tChunk Benchmark 1 time: " + (end - start) + "ms");
     return {
-      name: "Benchmark",
+      name: "Benchmark1",
       result: end - start < 3,
+    };
+  }
+
+  Benchmark2() {
+    var c = new Chunk(16, 16, 16);
+    var start = performance.now();
+    for (var i = 0; i < 1000000; i++) {
+      c.setBlockType(12, 12, 12, 255);
+      c.getBlockType(12, 12, 12);
+    }
+    var end = performance.now();
+    console.log("\tChunk Benchmark 2 time: " + (end - start) + "ms");
+    return {
+      name: "Benchmark2",
+      result: end - start < 10,
     };
   }
 
