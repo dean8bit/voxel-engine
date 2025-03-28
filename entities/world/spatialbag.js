@@ -1,7 +1,7 @@
 //@ts-check
 export default class SpatialBag {
   /**
-   * A dictionary to store chunks with their keys.
+   * A dictionary to store objects with their keys. max 255x255x255 objects
    * @type {Object.<number, Object>}
    */
   items = {};
@@ -15,7 +15,7 @@ export default class SpatialBag {
    * @private
    */
   _key(x, y, z) {
-    return x + (y << 16) + (z << 32);
+    return (x & 0xff) + ((y & 0xff) << 16) + ((z & 0xff) << 0);
   }
 
   /**

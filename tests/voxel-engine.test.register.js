@@ -8,7 +8,7 @@ console.log("Running tests...");
 var results = [];
 results.push(new Tests().run());
 results.push(new SpatialBagTests().run());
-//results.push(new ChunkTests().run());
+results.push(new ChunkTests().run());
 //results.push(new WorldTests().run());
 
 if (results.every((r) => r)) {

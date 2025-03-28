@@ -1,4 +1,4 @@
-import { Chunk } from "./chunk";
+import Chunk from "./chunk";
 
 export class Volume {
   /**
@@ -28,6 +28,8 @@ export class Volume {
   }
 
   set(x, y, z, chunk) {
-    this.chunks[x + this.width * (y + this.height * z)] = chunk;
+    const index = x + this.width * (y + this.height * z);
+    if (index < 0 || index >= this.chunks.length) return;
+    this.chunks[index] = chunk;
   }
 }

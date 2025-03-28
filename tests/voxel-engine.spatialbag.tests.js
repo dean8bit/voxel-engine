@@ -23,8 +23,6 @@ export default class SpatialBagTests {
     var bag = new SpatialBag();
     bag.add(0, 0, 0, "test");
     var item = bag.get(0, 0, 0);
-    bag.add(23, 3141, 122, "test");
-    var item = bag.get(0, 0, 0);
     return { name: "test1", result: item === "test" };
   }
 
