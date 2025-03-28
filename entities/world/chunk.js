@@ -1,5 +1,4 @@
 //@ts-check
-
 /*
  * 3D representation of the voxel corners:
  *
@@ -61,6 +60,7 @@ export default class Chunk {
   /**
    * A flat array representing the 3D voxels.
    * @type {Uint32Array}
+   * @default null
    */
   voxels = null;
 

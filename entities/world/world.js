@@ -1,7 +1,7 @@
 //@ts-check
 import * as THREE from "../../libs/three.module.js";
 import Chunk from "./chunk.js";
-import SpatialBag from "./spatialbag.js";
+import Bag from "./bag.js";
 
 /**
  * Represents the world in the voxel game, managing chunks of the world.
@@ -14,7 +14,7 @@ import SpatialBag from "./spatialbag.js";
 export class World extends THREE.Object3D {
   /**
    * The bag of volumes, which is a collection of chunks.
-   * @type {SpatialBag}
+   * @type {Bag}
    */
   volumes = new Bag();
 
