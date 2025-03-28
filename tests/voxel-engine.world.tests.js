@@ -19,7 +19,44 @@ export default class WorldTests {
       this.SetGetVoxel2,
       this.SetGetVoxel3,
       this.SetGetVoxel4,
+      this.Benchmark1,
+      this.Benchmark2Precreated,
     ];
+  }
+
+  Benchmark1() {
+    var world = new World();
+    var start = performance.now();
+    for (var i = 0; i < 1000000; i++) {
+      world.setVoxelData(i, i, i, 1);
+      world.getVoxelData(i, i, i);
+    }
+    var end = performance.now();
+    console.log("\tChunk Benchmark 1 time: " + (end - start) + "ms");
+    return {
+      name: "Benchmark1",
+      result: end - start < 2000,
+    };
+  }
+
+  Benchmark2Precreated() {
+    var world = new World();
+    for (var i = 0; i < 1000000; i++) {
+      world.setVoxelData(i, i, i, 1);
+    }
+    var start = performance.now();
+    for (var i = 0; i < 1000000; i++) {
+      world.setVoxelData(i, i, i, 1);
+      world.getVoxelData(i, i, i);
+    }
+    var end = performance.now();
+    console.log(
+      "\tChunk Benchmark 2 (precreate) time: " + (end - start) + "ms"
+    );
+    return {
+      name: "Benchmark2Precreated",
+      result: end - start < 250,
+    };
   }
 
   SetGetVoxel1() {

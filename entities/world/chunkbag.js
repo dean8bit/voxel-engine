@@ -54,4 +54,8 @@ export default class ChunkBag {
     const key = this._chunkKey(x, y, z);
     delete this.chunks[key];
   }
+
+  length() {
+    return Object.keys(this.chunks).length;
+  }
 }
