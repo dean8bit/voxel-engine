@@ -36,7 +36,7 @@
  * There is a lot of repitition in this class, but it is done for performance reasons.
  * Inlining and reducing function overhead.
  */
-export class Chunk {
+export default class Chunk {
   /**
    * The width of the chunk.
    * @type {number}

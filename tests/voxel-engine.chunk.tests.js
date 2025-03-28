@@ -1,6 +1,6 @@
 //@ts-check
 
-import { Chunk } from "../entities/world/chunk.js";
+import Chunk from "../entities/world/chunk.js";
 
 /**
  * Class representing a collection of tests.

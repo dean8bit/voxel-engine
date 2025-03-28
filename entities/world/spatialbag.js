@@ -1,23 +1,21 @@
 //@ts-check
-import { Chunk } from "./chunk.js";
-
-export default class ChunkBag {
+export default class SpatialBag {
   /**
    * A dictionary to store chunks with their keys.
-   * @type {Object.<string, Chunk>}
+   * @type {Object.<number, Object>}
    */
-  chunks = {};
+  items = {};
 
   /**
    * Generates a unique key for a chunk based on its coordinates.
    * @param {number} x - The x-coordinate of the chunk.
    * @param {number} y - The y-coordinate of the chunk.
    * @param {number} z - The z-coordinate of the chunk.
-   * @returns {string} The unique key for the chunk.
+   * @returns {number} The unique key for the chunk.
    * @private
    */
-  _chunkKey(x, y, z) {
-    return `${x},${y},${z}`;
+  _key(x, y, z) {
+    return x + (y << 16) + (z << 32);
   }
 
   /**
@@ -25,11 +23,11 @@ export default class ChunkBag {
    * @param {number} x - The x-coordinate of the chunk.
    * @param {number} y - The y-coordinate of the chunk.
    * @param {number} z - The z-coordinate of the chunk.
-   * @param {Chunk} chunk - The chunk to add.
+   * @param {Object} chunk - The chunk to add.
    */
-  addChunk(x, y, z, chunk) {
-    const key = this._chunkKey(x, y, z);
-    this.chunks[key] = chunk;
+  add(x, y, z, chunk) {
+    const key = this._key(x, y, z);
+    this.items[key] = chunk;
   }
 
   /**
@@ -37,11 +35,11 @@ export default class ChunkBag {
    * @param {number} x - The x-coordinate of the chunk.
    * @param {number} y - The y-coordinate of the chunk.
    * @param {number} z - The z-coordinate of the chunk.
-   * @returns {Chunk|undefined} The chunk at the specified coordinates, or undefined if it does not exist.
+   * @returns {Object|undefined} The object at the specified coordinates, or undefined if it does not exist.
    */
-  getChunk(x, y, z) {
-    const key = this._chunkKey(x, y, z);
-    return this.chunks[key];
+  get(x, y, z) {
+    const key = this._key(x, y, z);
+    return this.items[key];
   }
 
   /**
@@ -50,12 +48,12 @@ export default class ChunkBag {
    * @param {number} y - The y-coordinate of the chunk.
    * @param {number} z - The z-coordinate of the chunk.
    */
-  removeChunk(x, y, z) {
-    const key = this._chunkKey(x, y, z);
-    delete this.chunks[key];
+  remove(x, y, z) {
+    const key = this._key(x, y, z);
+    delete this.items[key];
   }
 
   length() {
-    return Object.keys(this.chunks).length;
+    return Object.keys(this.items).length;
   }
 }
