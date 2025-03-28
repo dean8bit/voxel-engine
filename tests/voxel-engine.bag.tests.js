@@ -16,6 +16,7 @@ export default class BagTests {
     this.tests = [
       this.bagTest1,
       this.bagTest2,
+      this.bagTest3,
       this.bagBenchMarkTest1,
       this.bagBenchMarkTest2,
     ];
@@ -35,6 +36,15 @@ export default class BagTests {
     bag.add(3525, 2352, 23523, volume);
     var item = bag.get(3525, 2352, 23523);
     return { name: "bagTest2", result: item === volume };
+  }
+
+  bagTest3() {
+    var bag = new Bag();
+    const volume = new Volume();
+    bag.add(2097151, 2097151, 2097151, volume);
+    var item = bag.get(2097151, 2097151, 2097151);
+    console.log(bag.items);
+    return { name: "bagTest3", result: item === volume };
   }
 
   bagBenchMarkTest1() {
