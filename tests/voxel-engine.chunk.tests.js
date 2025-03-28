@@ -234,9 +234,8 @@ export default class ChunkTests {
       c.getVoxel(12, 12, 12);
     }
     var end = performance.now();
-    console.log("\tChunk Benchmark 1 time: " + (end - start) + "ms");
     return {
-      name: "Benchmark1",
+      name: "Benchmark1 time: " + (end - start) + "ms",
       result: end - start < 15,
     };
   }
@@ -249,9 +248,8 @@ export default class ChunkTests {
       c.getBlockType(12, 12, 12);
     }
     var end = performance.now();
-    console.log("\tChunk Benchmark 2 time: " + (end - start) + "ms");
     return {
-      name: "Benchmark2",
+      name: "Benchmark2 time: " + (end - start) + "ms",
       result: end - start < 15,
     };
   }

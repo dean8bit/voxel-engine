@@ -32,9 +32,8 @@ export default class WorldTests {
       world.getVoxelData(i, i, i);
     }
     var end = performance.now();
-    console.log("\tChunk Benchmark 1 time: " + (end - start) + "ms");
     return {
-      name: "Benchmark1",
+      name: "Benchmark1 time: " + (end - start) + "ms",
       result: end - start < 2000,
     };
   }
@@ -50,11 +49,9 @@ export default class WorldTests {
       world.getVoxelData(i, i, i);
     }
     var end = performance.now();
-    console.log(
-      "\tChunk Benchmark 2 (precreate) time: " + (end - start) + "ms"
-    );
+
     return {
-      name: "Benchmark2Precreated",
+      name: "Benchmark2Precreated time: " + (end - start) + "ms",
       result: end - start < 250,
     };
   }
