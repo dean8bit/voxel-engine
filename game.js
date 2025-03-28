@@ -1,3 +1,4 @@
+//@ts-check
 import * as THREE from "./libs/three.module.js";
 import Scene from "./scene.js";
 
@@ -45,7 +46,9 @@ export default class Game {
    */
   updateAspect() {
     const camera = this.scenes[this.scene].camera;
+    // @ts-ignore
     camera.aspect = window.innerWidth / window.innerHeight;
+    // @ts-ignore
     camera.updateProjectionMatrix();
     this.renderer.setSize(window.innerWidth, window.innerHeight);
   }

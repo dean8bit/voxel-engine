@@ -1,3 +1,4 @@
+//@ts-check
 import * as THREE from "./libs/three.module.js";
 
 export default class Scene extends THREE.Scene {
