@@ -40,7 +40,7 @@ export default class WorldTests {
 
   Benchmark2Precreated() {
     var world = new World();
-    for (var i = 0; i < 1000000; i++) {
+    for (var i = 0; i < 1000000; i += 16) {
       world.setVoxelData(i, i, i, 1);
     }
     var start = performance.now();
