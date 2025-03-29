@@ -62,7 +62,7 @@ const grad4 = /*#__PURE__*/ new Float64Array([
 /**
  * Creates a 2D noise function
  * @param random the random function that will be used to build the permutation table
- * @returns {NoiseFunction2D}
+ * @returns {Function}
  */
 export function createNoise2D(random = Math.random) {
   const perm = buildPermutationTable(random);
@@ -140,7 +140,7 @@ export function createNoise2D(random = Math.random) {
 /**
  * Creates a 3D noise function
  * @param random the random function that will be used to build the permutation table
- * @returns {NoiseFunction3D}
+ * @returns {Function}
  */
 export function createNoise3D(random = Math.random) {
   const perm = buildPermutationTable(random);
@@ -284,7 +284,7 @@ export function createNoise3D(random = Math.random) {
 /**
  * Creates a 4D noise function
  * @param random the random function that will be used to build the permutation table
- * @returns {NoiseFunction4D}
+ * @returns {Function}
  */
 export function createNoise4D(random = Math.random) {
   const perm = buildPermutationTable(random);
