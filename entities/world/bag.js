@@ -16,11 +16,12 @@ export default class Bag {
    * @param {number} x - The x-coordinate of the object.
    * @param {number} y - The y-coordinate of the object.
    * @param {number} z - The z-coordinate of the object.
-   * @returns {number} The unique key for the object.
+   * @returns {number|string} The unique key for the object.
    * @private
    */
   _key(x, y, z) {
-    return (x & 0x1fffff) | ((y & 0x1fffff) << 21) | ((z & 0x1fffff) << 42);
+    return "x" + x + "y" + y + "z" + z;
+    //return (x & 0x1fffff) | ((y & 0x1fffff) << 21) | ((z & 0x1fffff) << 42);
   }
 
   /**
