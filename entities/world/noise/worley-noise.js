@@ -32,36 +32,46 @@ var noise = new WorleyNoise({
   /*dim: 3,*/
 });
 
-// // Manually adds a point to the center.
-// noise.addPoint({ x: 0.5, y: 0.5 });
+/**
+// Manually adds a point to the center.
 
-// // Gets Euclidean noise value at (0.3, 0.4).
-// // The third argument (k) defines which point should be chosen when calculating the distance.
-// // As k=1 in this case, the closest point is chosen.
-// console.log(noise.getEuclidean({ x: 0.3, y: 0.4 }, 1));
+noise.addPoint({ x: 0.5, y: 0.5 });
 
-// // Gets Manhattan noise value at (0.3, 0.4).
-// // As k=2 in this case, the 2nd closest point is chosen.
-// console.log(noise.getManhattan({ x: 0.3, y: 0.4 }, 2));
+// Gets Euclidean noise value at (0.3, 0.4).
+// The third argument (k) defines which point should be chosen when calculating the distance.
+// As k=1 in this case, the closest point is chosen.
 
-// // Creates an 5x5 array with the computed noise values.
-// var width = 5;
-// var img = noise.renderImage(width);
+console.log(noise.getEuclidean({ x: 0.3, y: 0.4 }, 1));
 
-// // Gets value at (3, 2).
-// // (3, 2) corresponds to (3 / (5 - 1), 2 / (5 - 1)) -> (0.75, 0.5).
-// console.log(img[2 * width + 3]);
+// Gets Manhattan noise value at (0.3, 0.4).
+// As k=2 in this case, the 2nd closest point is chosen.
 
-// // Creates a normalized array where values have been scaled to be between 0 and 1.
-// img = noise.renderImage(width, { normalize: true });
+console.log(noise.getManhattan({ x: 0.3, y: 0.4 }, 2));
 
-// // Uses custom function for noise value calculation.
-// // It sums the Euclidean distance to the closest point
-// // and the Manhattan distance to the second closest point.
-// img = noise.renderImage(width, {
-//   normalize: true,
-//   callback: function (e, m) { return e(1) + m(2); }
-// });
+// Creates an 5x5 array with the computed noise values.
+
+var width = 5;
+
+var img = noise.renderImage(width);
+
+// Gets value at (3, 2).
+// (3, 2) corresponds to (3 / (5 - 1), 2 / (5 - 1)) -> (0.75, 0.5).
+
+console.log(img[2 * width + 3]);
+
+// Creates a normalized array where values have been scaled to be between 0 and 1.
+
+img = noise.renderImage(width, { normalize: true });
+
+// Uses custom function for noise value calculation.
+// It sums the Euclidean distance to the closest point
+// and the Manhattan distance to the second closest point.
+
+img = noise.renderImage(width, {
+  normalize: true,
+  callback: function (e, m) { return e(1) + m(2); }
+});
+*/
 
 class WorleyNoise {
   constructor(config) {
