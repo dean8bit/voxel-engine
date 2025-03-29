@@ -74,6 +74,15 @@ img = noise.renderImage(width, {
 */
 
 class WorleyNoise {
+  /**
+   * Creates an instance of WorleyNoise.
+   *
+   * @param {Object} [config={}] - Configuration object for the noise generator.
+   * @param {number} [config.dim=2] - The dimensionality of the noise (2 or 3). Defaults to 2.
+   * @param {number} [config.numPoints=0] - The number of points to generate for the noise.
+   * @param {number} [config.seed] - The seed value for the random number generator. If not provided, Math.random() is used.
+   * @throws {Error} Throws an error if `dim` is not 2, 3, or undefined.
+   */
   constructor(config) {
     config = config || {};
     if (config.dim !== 2 && config.dim !== 3 && config.dim !== undefined)
@@ -104,6 +113,21 @@ class WorleyNoise {
     return this._calculateValue(coord, k, manhattan);
   }
 
+  /**
+   * Renders an image based on Worley noise values.
+   *
+   * @param {number} resolution - The resolution of the image (number of pixels per row/column).
+   * @param {Object} [config] - Configuration options for rendering the image.
+   * @param {number} [config.z=0] - The z-coordinate for the noise calculation.
+   * @param {boolean} [config.normalize=false] - Whether to normalize the output values between 0 and 1.
+   * @param {Function} [config.callback] - A callback function to process the noise values.
+   *                                      The function receives two parameters:
+   *                                      - `e`: A function to calculate Euclidean distance-based noise.
+   *                                      - `m`: A function to calculate Manhattan distance-based noise.
+   *                                      Defaults to `(e, m) => e(1)`.
+   * @returns {number[]} A 1D array representing the rendered image, where each value corresponds to a pixel.
+   *                     If `config.normalize` is true, the values are normalized between 0 and 1.
+   */
   renderImage(resolution, config) {
     config = config || {};
     const step = 1 / (resolution - 1);
