@@ -43,7 +43,6 @@ export default class BagTests {
     const volume = new Volume();
     bag.add(2097151, 2097151, 2097151, volume);
     var item = bag.get(2097151, 2097151, 2097151);
-    console.log(bag.items);
     return { name: "bagTest3", result: item === volume };
   }
 
@@ -64,10 +63,12 @@ export default class BagTests {
   bagBenchMarkTest2() {
     var bag = new Bag();
     const volume = new Volume();
-    var start = performance.now();
-    bag.add(255, 255, 255, volume);
     for (var i = 0; i < 1000000; i++) {
-      bag.get(255, 255, 255);
+      bag.add(i, i, i, volume);
+    }
+    var start = performance.now();
+    for (var i = 0; i < 1000000; i++) {
+      bag.get(i, i, i);
     }
     var end = performance.now();
     return {

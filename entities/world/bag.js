@@ -20,8 +20,8 @@ export default class Bag {
    * @private
    */
   _key(x, y, z) {
-    return "x" + x + "y" + y + "z" + z;
-    //return (x & 0x1fffff) | ((y & 0x1fffff) << 21) | ((z & 0x1fffff) << 42);
+    //return "x" + x + "y" + y + "z" + z;
+    return (x & 0x1fffff) | ((y & 0x1fffff) << 21) | ((z & 0x1fffff) << 10);
   }
 
   /**
