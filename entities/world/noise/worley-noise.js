@@ -32,6 +32,126 @@ var noise = new WorleyNoise({
   /*dim: 3,*/
 });
 
+/*
+var canvas = document.getElementById('canvas');
+var ctx = canvas.getContext('2d');
+var imageData = ctx.getImageData(0, 0, canvas.getAttribute('width'), canvas.getAttribute('height'));
+var pixels = imageData.data;
+var noise = new WorleyNoise({ numPoints: 50 });
+var img = noise.renderImage(imageData.width, { normalize: true });
+
+for (var y = 0; y < imageData.height; ++y) {
+    for (var x = 0; x < imageData.width; ++x) {
+        base = (y * imageData.width + x) * 4;
+        pixels[base] = img[y * imageData.width + x] * 255;
+        pixels[base + 1] = img[y * imageData.width + x] * 255;
+        pixels[base + 2] = img[y * imageData.width + x] * 255;
+        pixels[base + 3] = 255;
+    }
+}
+
+ctx.putImageData(imageData, 0, 0);
+
+------------------------
+
+var canvas = document.getElementById('canvas');
+var ctx = canvas.getContext('2d');
+var imageData = ctx.getImageData(0, 0, canvas.getAttribute('width'), canvas.getAttribute('height'));
+var pixels = imageData.data;
+var noise = new WorleyNoise({ numPoints: 100, dim: 3 });
+var zip = new JSZip();
+var files = zip.folder('images');
+
+var z = 0;
+var interval = setInterval(() => {
+    var img = noise.renderImage(imageData.width, {
+        normalize: true,
+        z: z / 100,
+        callback: function (e, m) { return e(2) - e(1); }
+    });
+
+    for (var y = 0; y < imageData.height; ++y) {
+        for (var x = 0; x < imageData.width; ++x) {
+            base = (y * imageData.width + x) * 4;
+            pixels[base] = img[y * imageData.width + x] * 255;
+            pixels[base + 1] = img[y * imageData.width + x] * 255;
+            pixels[base + 2] = img[y * imageData.width + x] * 255;
+            pixels[base + 3] = 255;
+        }
+    }
+
+    ctx.putImageData(imageData, 0, 0);
+    files.file(`n${z}.png`, canvas.toDataURL().split('base64,')[1], { base64: true });
+
+    if (++z > 100) {
+        zip.generateAsync({ type: 'blob' }).then(function (content) {
+            saveAs(content, 'noise.zip');
+        });
+        clearInterval(interval);
+    }
+}, 100);
+
+
+----------
+
+var canvas = document.getElementById('canvas');
+            var ctx = canvas.getContext('2d');
+            var imageData = ctx.getImageData(0, 0, canvas.getAttribute('width'), canvas.getAttribute('height'));
+            var pixels = imageData.data;
+            var noise = new WorleyNoise({ numPoints: 50 });
+
+            function draw(img) {
+                for (var y = 0; y < imageData.height; ++y) {
+                    for (var x = 0; x < imageData.width; ++x) {
+                        var base = (y * imageData.width + x) * 4;
+                        pixels[base] = img[y * imageData.width + x] * 255;
+                        pixels[base + 1] = img[y * imageData.width + x] * 255;
+                        pixels[base + 2] = img[y * imageData.width + x] * 255;
+                        pixels[base + 3] = 255;
+                    }
+                }
+
+                ctx.putImageData(imageData, 0, 0);
+            }
+
+            document.getElementById('e1').addEventListener('click', function () {
+                var img = noise.renderImage(imageData.width, {
+                    normalize: true,
+                    callback: function (e, m) { return e(2); }
+                });
+
+                draw(img);
+            });
+
+            document.getElementById('e2').addEventListener('click', function () {
+                var img = noise.renderImage(imageData.width, {
+                    normalize: true,
+                    callback: function (e, m) { return e(2) - e(1); }
+                });
+
+                draw(img);
+            });
+
+            document.getElementById('m1').addEventListener('click', function () {
+                var img = noise.renderImage(imageData.width, {
+                    normalize: true,
+                    callback: function (e, m) { return m(1); }
+                });
+
+                draw(img);
+            });
+
+            document.getElementById('m2').addEventListener('click', function () {
+                var img = noise.renderImage(imageData.width, {
+                    normalize: true,
+                    callback: function (e, m) { return m(1) / m(2); }
+                });
+
+                draw(img);
+            });
+
+*/
+
 /**
 // Manually adds a point to the center.
 
